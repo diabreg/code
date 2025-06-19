@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8">
+  <title>Контакт - DiabReg</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fb;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 30px 40px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 160px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #0b3a5b;
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    input[type="email"],
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="logo.jpg" alt="DiabReg Лого" class="logo">
+
+    <h2>Испрати е-пошта</h2>
+    <form action="/send-email" method="POST" enctype="multipart/form-data">
+      <label for="to">До (email на примач):</label>
+      <input type="email" id="to" name="to" required>
+
+      <label for="subject">Наслов (Subject):</label>
+      <input type="text" id="subject" name="subject" required>
+
+      <label for="message">Порака:</label>
+      <textarea id="message" name="message" rows="6" required></textarea>
+
+      <label for="attachments">Прикачи фајл:</label>
+      <input type="file" name="attachments" id="attachments" multiple>
+
+      <button type="submit">Испрати</button>
+    </form>
+  </div>
+
+</body>
+</html>
