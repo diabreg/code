@@ -90,7 +90,12 @@
 <div id="historyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999;">
   <div style="background:white; width:90%; max-width:800px; margin:80px auto; padding:20px; border-radius:10px; overflow:auto; max-height:80%;">
     <h3 style="text-align:center;">Историја на испратени пораки</h3>
-    <div id="historyContent">Вчитување...</div>
+    <!-- Пребарувач -->
+<input type="text" id="searchInput" placeholder="Пребарај..." onkeyup="filterHistory()" style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:6px;">
+
+<!-- Табела со историја -->
+<div id="historyContent"></div>
+
     <div style="text-align:center; margin-top:20px;">
       <button onclick="document.getElementById('historyModal').style.display='none'">Затвори</button>
     </div>
@@ -143,6 +148,17 @@
     } catch (err) {
       document.getElementById('historyContent').innerHTML = '<p style="color:red;">Грешка при вчитување на податоците.</p>';
     }
+  }
+  
+   function filterHistory() {
+    const input = document.getElementById('searchInput');
+    const filter = input.value.toLowerCase();
+    const rows = document.querySelectorAll("#historyContent table tr:not(:first-child)");
+
+    rows.forEach(row => {
+      const text = row.innerText.toLowerCase();
+      row.style.display = text.includes(filter) ? "" : "none";
+    });
   }
 </script>
 
