@@ -82,6 +82,22 @@
     <img src="logo.jpg" alt="DiabReg Лого" class="logo">
 
     <h2>Испрати е-пошта</h2>
+	
+	<!-- Историја Копче -->
+<button type="button" onclick="loadHistory()">📜 Историја</button>
+
+<!-- Popup модал -->
+<div id="historyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999;">
+  <div style="background:white; width:90%; max-width:800px; margin:80px auto; padding:20px; border-radius:10px; overflow:auto; max-height:80%;">
+    <h3 style="text-align:center;">Историја на испратени пораки</h3>
+    <div id="historyContent">Вчитување...</div>
+    <div style="text-align:center; margin-top:20px;">
+      <button onclick="document.getElementById('historyModal').style.display='none'">Затвори</button>
+    </div>
+  </div>
+</div>
+<BR><BR><BR><BR>
+	
     <form action="/send-email" method="POST" enctype="multipart/form-data">
       <label for="to">До (email на примач):</label>
       <input type="email" id="to" name="to" required>
@@ -98,6 +114,37 @@
       <button type="submit">Испрати</button>
     </form>
   </div>
+<script>
+  async function loadHistory() {
+    try {
+      const response = await fetch('/history.json');
+      const history = await response.json();
+
+      if (history.length === 0) {
+        document.getElementById('historyContent').innerHTML = '<p>Нема податоци за прикажување.</p>';
+      } else {
+        let table = '<table border="1" cellpadding="6" cellspacing="0" style="width:100%; border-collapse:collapse;">';
+        table += '<tr><th>До</th><th>Subject</th><th>Порака</th><th>Атачменти</th><th>Датум</th></tr>';
+        history.reverse().forEach(entry => {
+          table += `<tr>
+            <td>${entry.to}</td>
+            <td>${entry.subject}</td>
+            <td>${entry.message}</td>
+            <td>${entry.attachments.join('<br>')}</td>
+            <td>${new Date(entry.date).toLocaleString()}</td>
+          </tr>`;
+        });
+        table += '</table>';
+        document.getElementById('historyContent').innerHTML = table;
+      }
+
+      document.getElementById('historyModal').style.display = 'block';
+
+    } catch (err) {
+      document.getElementById('historyContent').innerHTML = '<p style="color:red;">Грешка при вчитување на податоците.</p>';
+    }
+  }
+</script>
 
 </body>
 </html>
